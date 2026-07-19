@@ -3,7 +3,10 @@ import { getSupabase } from '../config/supabase';
 import { createErrorResponse } from '../utils/response';
 
 export interface AuthContext {
-    user: any;
+    user: {
+        id: string;
+        email?: string;
+    };
     token: string;
 }
 
@@ -18,18 +21,26 @@ export async function withAuth(
         return createErrorResponse('Unauthorized: Missing or invalid token', null, 401);
     }
 
-    const token = authHeader.split(' ')[1];
+    const token = authHeader.replace('Bearer ', '');
+    const supabase = getSupabase(env);
 
     try {
-        const supabase = getSupabase(env, token);
-        const { data: { user }, error } = await supabase.auth.getUser();
+        const { data: { user }, error } = await supabase.auth.getUser(token);
 
         if (error || !user) {
-            return createErrorResponse('Unauthorized: Invalid token', error, 401);
+            return createErrorResponse('Unauthorized: Invalid token', error?.message, 401);
         }
 
-        return handler(request, env, { user, token });
-    } catch (e) {
-        return createErrorResponse('Internal Server Error during authentication', null, 500);
+        const authContext: AuthContext = {
+            user: {
+                id: user.id,
+                email: user.email,
+            },
+            token,
+        };
+
+        return await handler(request, env, authContext);
+    } catch (error: any) {
+        return createErrorResponse('Internal Server Error', error.message, 500);
     }
 }

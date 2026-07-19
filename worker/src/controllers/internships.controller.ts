@@ -65,6 +65,42 @@ export async function createInternship(request: Request, env: Env, auth: AuthCon
             return createErrorResponse('Company profile not found', companyError, 404);
         }
 
+        let vector_id = null;
+
+        // Create embedding for Vectorize semantic search if AI is available
+        if (env.AI && env.VECTORIZE) {
+            try {
+                const internshipText = [
+                    body.title,
+                    body.description,
+                    ...(body.required_skills || [])
+                ].filter(Boolean).join(' ');
+
+                const aiResponse = await env.AI.run('@cf/baai/bge-small-en-v1.5', {
+                    text: internshipText
+                });
+
+                const embedding = aiResponse.data[0];
+
+                // create a vector ID, usually just use standard UUID or let database handle it and update, but
+                // we can just generate a UUID here or use the internship title as part of it
+                vector_id = crypto.randomUUID();
+
+                await env.VECTORIZE.insert([
+                    {
+                        id: vector_id,
+                        values: embedding,
+                        metadata: {
+                            company_id: company.id,
+                            title: body.title
+                        }
+                    }
+                ]);
+            } catch (err) {
+                console.error("Failed to vectorize new internship:", err);
+            }
+        }
+
         const { data, error } = await supabase
             .from('internships')
             .insert({
@@ -76,6 +112,7 @@ export async function createInternship(request: Request, env: Env, auth: AuthCon
                 duration: body.duration,
                 stipend: body.stipend,
                 work_mode: body.work_mode,
+                vector_id: vector_id
             })
             .select()
             .single();
