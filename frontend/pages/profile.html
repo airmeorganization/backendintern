@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Internship Engine</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navbar injected via JS -->
+
+    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div class="px-4 py-6 sm:px-0">
+            <h1 class="text-3xl font-bold text-gray-900 mb-6">Profile Settings</h1>
+
+            <div id="loading-state" class="text-center py-12">
+                <div class="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-indigo-600"></div>
+            </div>
+
+            <div id="content-state" class="hidden">
+                <div class="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
+                    <form id="profile-form" class="space-y-6">
+                        <!-- Student Fields -->
+                        <div id="student-fields" class="hidden space-y-6">
+                            <div>
+                                <label for="preferred_domain" class="block text-sm font-medium text-gray-700">Preferred Domain</label>
+                                <input type="text" name="preferred_domain" id="preferred_domain" placeholder="e.g. Frontend Engineering, Data Science" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            </div>
+                            <div>
+                                <label for="skills" class="block text-sm font-medium text-gray-700">Skills (comma separated)</label>
+                                <input type="text" name="skills" id="skills" placeholder="React, TypeScript, Python" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            </div>
+                            <div>
+                                <label for="education" class="block text-sm font-medium text-gray-700">Education</label>
+                                <input type="text" name="education" id="education" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            </div>
+                        </div>
+
+                        <!-- Company Fields -->
+                        <div id="company-fields" class="hidden space-y-6">
+                            <div>
+                                <label for="company_name" class="block text-sm font-medium text-gray-700">Company Name</label>
+                                <input type="text" name="company_name" id="company_name" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            </div>
+                            <div>
+                                <label for="description" class="block text-sm font-medium text-gray-700">Company Description</label>
+                                <textarea id="description" name="description" rows="3" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end pt-5">
+                            <button type="submit" id="save-btn" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                Save Profile
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script type="module" src="/js/pages/profile.js"></script>
+</body>
+</html>
