@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Internship Engine</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navbar injected via JS -->
+
+    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div class="px-4 py-6 sm:px-0">
+            <h1 class="text-3xl font-bold text-gray-900 mb-6">Dashboard</h1>
+
+            <div id="loading-state" class="text-center py-12">
+                <div class="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-indigo-600"></div>
+                <p class="mt-2 text-gray-500">Loading dashboard...</p>
+            </div>
+
+            <div id="content-state" class="hidden">
+                <!-- Welcome section -->
+                <div class="bg-white overflow-hidden shadow rounded-lg mb-6">
+                    <div class="px-4 py-5 sm:p-6">
+                        <h2 class="text-lg font-medium text-gray-900" id="welcome-message">Welcome!</h2>
+                        <div class="mt-2 max-w-xl text-sm text-gray-500" id="profile-status">
+                            Loading status...
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats specific to role -->
+                <div id="stats-container" class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                    <!-- Cards injected here -->
+                </div>
+            </div>
+        </div>
+    </main>
+    <script type="module" src="/js/pages/dashboard.js"></script>
+</body>
+</html>
