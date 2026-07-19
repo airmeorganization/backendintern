@@ -6,7 +6,10 @@ import { handleApplicationRoutes } from './applications.routes';
 export function setupRouter() {
     return async (request: Request, env: Env, ctx: ExecutionContext): Promise<Response | null> => {
         const url = new URL(request.url);
-        const path = url.pathname;
+        let path = url.pathname;
+        if (path.endsWith('/') && path.length > 1) {
+            path = path.slice(0, -1);
+        }
 
         if (path.startsWith('/api/v1/profile')) {
             return handleProfileRoutes(request, env);
